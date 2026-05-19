@@ -1,0 +1,117 @@
+/* Base Styles */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f4f7f6;
+    color: #333;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+}
+
+/* Primary Theme Colors */
+:root {
+    --primary-blue: #0d6efd;
+    --primary-blue-hover: #0b5ed7;
+    --soft-white: #ffffff;
+    --bg-light: #f8f9fa;
+}
+
+.bg-primary {
+    background-color: var(--primary-blue) !important;
+}
+
+.text-primary {
+    color: var(--primary-blue) !important;
+}
+
+/* Cards & Containers */
+.card {
+    border: none;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+    background-color: var(--soft-white);
+    border-bottom: 1px solid #edf2f7;
+    border-top-left-radius: 12px !important;
+    border-top-right-radius: 12px !important;
+    font-weight: 600;
+}
+
+/* Evaluation Form Styles */
+.eval-section-title {
+    background-color: #e9ecef;
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.eval-row {
+    padding: 8px 0;
+    border-bottom: 1px dashed #dee2e6;
+}
+
+.eval-row:last-child {
+    border-bottom: none;
+}
+
+/* Ranking Badges */
+.rank-badge {
+    width: 32px;
+    height: 32px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-weight: bold;
+    color: white;
+}
+.rank-1 { background-color: #ffd700; } /* Gold */
+.rank-2 { background-color: #c0c0c0; } /* Silver */
+.rank-3 { background-color: #cd7f32; } /* Bronze */
+.rank-other { background-color: #6c757d; }
+
+/* Utilities */
+.cursor-pointer {
+    cursor: pointer;
+}
+
+/* Table Enhancements */
+.table th {
+    background-color: #f8f9fa;
+    border-bottom-width: 2px;
+    font-weight: 600;
+    color: #495057;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(13, 110, 253, 0.05);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+}
+
+::-webkit-scrollbar-thumb {
+    background: #c1c1c1; 
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8; 
+}
