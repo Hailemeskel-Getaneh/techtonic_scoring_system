@@ -36,35 +36,75 @@ export async function renderEvaluation(container, teamId) {
                         <div class="card-body">
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Program runs correctly</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-a" name="program_runs" value="${getVal('program_runs')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-a" name="program_runs" value="${getVal('program_runs')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Add Student Feature</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-a" name="add_student" value="${getVal('add_student')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-a" name="add_student" value="${getVal('add_student')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Display Students</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-a" name="display_students" value="${getVal('display_students')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-a" name="display_students" value="${getVal('display_students')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Search Student</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-a" name="search_student" value="${getVal('search_student')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-a" name="search_student" value="${getVal('search_student')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Update Student</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-a" name="update_student" value="${getVal('update_student')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-a" name="update_student" value="${getVal('update_student')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Class Average</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-a" name="class_average" value="${getVal('class_average')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-a" name="class_average" value="${getVal('class_average')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Top Student</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-a" name="top_student" value="${getVal('top_student')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-a" name="top_student" value="${getVal('top_student')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Pass/Fail Statistics</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-a" name="pass_fail" value="${getVal('pass_fail')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-a" name="pass_fail" value="${getVal('pass_fail')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -78,19 +118,39 @@ export async function renderEvaluation(container, teamId) {
                         <div class="card-body">
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Proper function usage</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-b" name="functions" value="${getVal('functions')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-b" name="functions" value="${getVal('functions')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Clean code</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-b" name="clean_code" value="${getVal('clean_code')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-b" name="clean_code" value="${getVal('clean_code')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Indentation & formatting</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-b" name="formatting" value="${getVal('formatting')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-b" name="formatting" value="${getVal('formatting')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Meaningful naming</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-b" name="naming" value="${getVal('naming')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-b" name="naming" value="${getVal('naming')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -104,19 +164,39 @@ export async function renderEvaluation(container, teamId) {
                         <div class="card-body">
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Proper loops</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-c" name="loops" value="${getVal('loops')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-c" name="loops" value="${getVal('loops')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Correct conditions</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-c" name="conditions" value="${getVal('conditions')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-c" name="conditions" value="${getVal('conditions')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Array handling</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-c" name="arrays" value="${getVal('arrays')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-c" name="arrays" value="${getVal('arrays')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Edge case handling</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-c" name="edge_cases" value="${getVal('edge_cases')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-c" name="edge_cases" value="${getVal('edge_cases')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -130,19 +210,39 @@ export async function renderEvaluation(container, teamId) {
                         <div class="card-body">
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Clear menu design</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-d" name="menu_design" value="${getVal('menu_design')}" min="0" max="3"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-d" name="menu_design" value="${getVal('menu_design')}" min="0" max="3">
+                                        <span class="input-group-text">/ 3</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Output formatting</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-d" name="output_format" value="${getVal('output_format')}" min="0" max="3"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-d" name="output_format" value="${getVal('output_format')}" min="0" max="3">
+                                        <span class="input-group-text">/ 3</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Helpful messages</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-d" name="helpful_messages" value="${getVal('helpful_messages')}" min="0" max="2"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-d" name="helpful_messages" value="${getVal('helpful_messages')}" min="0" max="2">
+                                        <span class="input-group-text">/ 2</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Invalid input handling</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-d" name="invalid_input" value="${getVal('invalid_input')}" min="0" max="2"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-d" name="invalid_input" value="${getVal('invalid_input')}" min="0" max="2">
+                                        <span class="input-group-text">/ 2</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -156,23 +256,48 @@ export async function renderEvaluation(container, teamId) {
                         <div class="card-body">
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Delete Student</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-e" name="delete_feature" value="${getVal('delete_feature')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-e" name="delete_feature" value="${getVal('delete_feature')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Sorting Students</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-e" name="sorting" value="${getVal('sorting')}" min="0" max="5"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-e" name="sorting" value="${getVal('sorting')}" min="0" max="5">
+                                        <span class="input-group-text">/ 5</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Grade System</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-e" name="grade_system" value="${getVal('grade_system')}" min="0" max="3"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-e" name="grade_system" value="${getVal('grade_system')}" min="0" max="3">
+                                        <span class="input-group-text">/ 3</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Duplicate Validation</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-e" name="duplicate_validation" value="${getVal('duplicate_validation')}" min="0" max="3"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-e" name="duplicate_validation" value="${getVal('duplicate_validation')}" min="0" max="3">
+                                        <span class="input-group-text">/ 3</span>
+                                    </div>
+                                </div>
                             </div>
                             <div class="row eval-row align-items-center">
                                 <div class="col-8">Partial Search</div>
-                                <div class="col-4"><input type="number" class="form-control score-input group-e" name="partial_search" value="${getVal('partial_search')}" min="0" max="3"></div>
+                                <div class="col-4">
+                                    <div class="input-group">
+                                        <input type="number" class="form-control score-input group-e" name="partial_search" value="${getVal('partial_search')}" min="0" max="3">
+                                        <span class="input-group-text">/ 3</span>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
