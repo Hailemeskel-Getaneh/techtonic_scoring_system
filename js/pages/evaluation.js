@@ -1,5 +1,6 @@
 import { API } from '../api.js';
 import { UI } from '../utils.js';
+import { Auth } from '../auth.js';
 
 export async function renderEvaluation(container, teamId) {
     const [teamResult, evalResult] = await Promise.all([
@@ -394,6 +395,10 @@ export async function renderEvaluation(container, teamId) {
     const form = document.getElementById('evaluationForm');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
+        if (!Auth.isJudge()) {
+            UI.showToast('Unauthorized', 'Judge login required.', 'danger');
+            return;
+        }
         UI.setButtonLoading('saveEvalBtn', true);
 
         const finalScore = calculateScores(); // Ensure latest is grabbed

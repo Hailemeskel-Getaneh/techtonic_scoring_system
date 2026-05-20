@@ -1,5 +1,6 @@
 import { API } from '../api.js';
 import { UI } from '../utils.js';
+import { Auth } from '../auth.js';
 
 export async function renderTeams(container) {
     const { data: teams, error } = await API.getTeams();
@@ -12,9 +13,11 @@ export async function renderTeams(container) {
     container.innerHTML = `
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h2><i class="bi bi-people text-primary me-2"></i> Teams Management</h2>
+            ${Auth.isJudge() ? `
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addTeamModal">
                 <i class="bi bi-plus-circle me-1"></i> Add Team
             </button>
+            ` : ''}
         </div>
 
         <div class="card">
@@ -44,7 +47,10 @@ export async function renderTeams(container) {
                                     <td>${new Date(team.created_at).toLocaleDateString()}</td>
                                     <td class="text-end">
                                         <a href="#/team/${team.id}" class="btn btn-sm btn-outline-primary"><i class="bi bi-eye"></i> Details</a>
-                                        <button class="btn btn-sm btn-outline-danger ms-1 delete-team-btn" data-id="${team.id}" data-name="${team.name}"><i class="bi bi-trash"></i></button>
+                                        ${Auth.isJudge() ? `
+                                        <button class="btn btn-sm btn-outline-warning ms-1 edit-team-btn" data-id="${team.id}" data-name="${encodeURIComponent(team.name)}" data-code="${encodeURIComponent(team.team_code || '')}"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-outline-danger ms-1 delete-team-btn" data-id="${team.id}" data-name="${encodeURIComponent(team.name)}"><i class="bi bi-trash"></i></button>
+                                        ` : ''}
                                     </td>
                                 </tr>
                             `).join('') : '<tr><td colspan="4" class="text-center py-4 text-muted">No teams found. Add a team to get started.</td></tr>'}
@@ -76,6 +82,35 @@ export async function renderTeams(container) {
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="submit" class="btn btn-primary" id="saveTeamBtn">Save Team</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit Team Modal -->
+        <div class="modal fade" id="editTeamModal" tabindex="-1" aria-labelledby="editTeamModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editTeamModalLabel">Edit Team</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <form id="editTeamForm">
+                        <div class="modal-body">
+                            <input type="hidden" id="editTeamId">
+                            <div class="mb-3">
+                                <label for="editTeamName" class="form-label">Team Name <span class="text-danger">*</span></label>
+                                <input type="text" class="form-control" id="editTeamName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editTeamCode" class="form-label">Team Code (Optional)</label>
+                                <input type="text" class="form-control" id="editTeamCode">
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary" id="updateTeamBtn">Update Team</button>
                         </div>
                     </form>
                 </div>
@@ -114,6 +149,10 @@ export async function renderTeams(container) {
     if (addTeamForm) {
         addTeamForm.addEventListener('submit', async (e) => {
             e.preventDefault();
+            if (!Auth.isJudge()) {
+                UI.showToast('Unauthorized', 'Judge login required.', 'danger');
+                return;
+            }
             const name = document.getElementById('teamName').value.trim();
             const team_code = document.getElementById('teamCode').value.trim();
 
@@ -139,22 +178,79 @@ export async function renderTeams(container) {
         });
     }
 
-    // Delete Team
-    const deleteBtns = document.querySelectorAll('.delete-team-btn');
-    deleteBtns.forEach(btn => {
-        btn.addEventListener('click', async (e) => {
-            const id = e.currentTarget.getAttribute('data-id');
-            const name = e.currentTarget.getAttribute('data-name');
-            
-            if (confirm(`Are you sure you want to delete team "${name}"? This will also delete all members and evaluations.`)) {
-                const { error } = await API.deleteTeam(id);
+    // Delete and Edit Team
+    if (Auth.isJudge()) {
+        const deleteBtns = document.querySelectorAll('.delete-team-btn');
+        deleteBtns.forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                const id = e.currentTarget.getAttribute('data-id');
+                const name = decodeURIComponent(e.currentTarget.getAttribute('data-name'));
+                if (confirm(`Are you sure you want to delete team "${name}"? This will also delete all members and evaluations.`)) {
+                    const { error } = await API.deleteTeam(id);
+                    if (error) {
+                        UI.showToast('Error', 'Failed to delete team.', 'danger');
+                    } else {
+                        UI.showToast('Success', 'Team deleted successfully.', 'success');
+                        window.dispatchEvent(new Event('hashchange'));
+                    }
+                }
+            });
+        });
+
+        // Edit Team logic
+        const editBtns = document.querySelectorAll('.edit-team-btn');
+        const editTeamModalEl = document.getElementById('editTeamModal');
+        let editTeamModal;
+        if (editTeamModalEl) {
+            editTeamModal = new bootstrap.Modal(editTeamModalEl);
+        }
+
+        editBtns.forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                const id = e.currentTarget.getAttribute('data-id');
+                const name = decodeURIComponent(e.currentTarget.getAttribute('data-name'));
+                const code = decodeURIComponent(e.currentTarget.getAttribute('data-code'));
+
+                document.getElementById('editTeamId').value = id;
+                document.getElementById('editTeamName').value = name;
+                document.getElementById('editTeamCode').value = code;
+
+                editTeamModal.show();
+            });
+        });
+
+        const editTeamForm = document.getElementById('editTeamForm');
+        if (editTeamForm) {
+            editTeamForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                if (!Auth.isJudge()) {
+                    UI.showToast('Unauthorized', 'Judge login required.', 'danger');
+                    return;
+                }
+
+                const id = document.getElementById('editTeamId').value;
+                const name = document.getElementById('editTeamName').value.trim();
+                const team_code = document.getElementById('editTeamCode').value.trim();
+
+                if (!name) {
+                    UI.showToast('Error', 'Team name is required.', 'danger');
+                    return;
+                }
+
+                UI.setButtonLoading('updateTeamBtn', true, 'Updating...');
+                
+                const { error } = await API.updateTeam(id, { name, team_code });
+                
+                UI.setButtonLoading('updateTeamBtn', false, 'Update Team');
+
                 if (error) {
-                    UI.showToast('Error', 'Failed to delete team.', 'danger');
+                    UI.showToast('Error', 'Failed to update team.', 'danger');
                 } else {
-                    UI.showToast('Success', 'Team deleted successfully.', 'success');
+                    UI.showToast('Success', 'Team updated successfully.', 'success');
+                    editTeamModal.hide();
                     window.dispatchEvent(new Event('hashchange'));
                 }
-            }
-        });
-    });
+            });
+        }
+    }
 }

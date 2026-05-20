@@ -43,6 +43,18 @@ export const API = {
         return await supabase.from('teams').insert([teamData]).select();
     },
 
+    async updateTeam(id, teamData) {
+        if (this.isMock) {
+            const index = mockTeams.findIndex(t => t.id === id);
+            if (index >= 0) {
+                mockTeams[index] = { ...mockTeams[index], ...teamData };
+                return { data: [mockTeams[index]], error: null };
+            }
+            return { error: new Error('Team not found') };
+        }
+        return await supabase.from('teams').update(teamData).eq('id', id).select();
+    },
+
     async deleteTeam(id) {
         if (this.isMock) {
             mockTeams = mockTeams.filter(t => t.id !== id);
@@ -66,6 +78,18 @@ export const API = {
             return { data: [newMember], error: null };
         }
         return await supabase.from('members').insert([memberData]).select();
+    },
+
+    async updateMember(id, memberData) {
+        if (this.isMock) {
+            const index = mockMembers.findIndex(m => m.id === id);
+            if (index >= 0) {
+                mockMembers[index] = { ...mockMembers[index], ...memberData };
+                return { data: [mockMembers[index]], error: null };
+            }
+            return { error: new Error('Member not found') };
+        }
+        return await supabase.from('members').update(memberData).eq('id', id).select();
     },
 
     async deleteMember(id) {
