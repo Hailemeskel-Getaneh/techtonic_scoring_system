@@ -3,10 +3,12 @@ import { UI } from '../utils.js';
 import { Auth } from '../auth.js';
 
 export async function renderTeamDetails(container, teamId) {
-    // Fetch team and members
-    const [teamResult, membersResult] = await Promise.all([
+    // Fetch team, members, evaluation, and rankings in parallel
+    const [teamResult, membersResult, evaluationResult, rankingsResult] = await Promise.all([
         API.getTeamById(teamId),
-        API.getMembersByTeam(teamId)
+        API.getMembersByTeam(teamId),
+        API.getEvaluationByTeam(teamId),
+        API.getRankings()
     ]);
 
     if (teamResult.error || !teamResult.data) {
@@ -17,10 +19,15 @@ export async function renderTeamDetails(container, teamId) {
 
     const team = teamResult.data;
     const members = membersResult.data || [];
+    const evaluation = evaluationResult.data || null;
+    const rankings = rankingsResult.data || [];
 
-    // Check if evaluation exists
-    const { data: evaluation } = await API.getEvaluationByTeam(teamId);
-    const scoreBadge = evaluation ? `<span class="badge bg-success fs-6 ms-3">Score: ${evaluation.total_score}</span>` : `<span class="badge bg-secondary fs-6 ms-3">Not Evaluated Yet</span>`;
+    // Find the team's rank
+    const teamRankIndex = rankings.findIndex(r => r.id === teamId);
+    const rank = teamRankIndex !== -1 ? teamRankIndex + 1 : null;
+
+    const scoreBadge = evaluation ? `<span class="badge bg-success fs-6 ms-3"><i class="bi bi-star-fill me-1"></i>Score: ${evaluation.total_score}</span>` : `<span class="badge bg-secondary fs-6 ms-3">Not Evaluated Yet</span>`;
+    const rankBadge = evaluation && rank ? `<span class="badge bg-primary fs-6 ms-2"><i class="bi bi-trophy-fill me-1"></i>Rank: #${rank}</span>` : '';
 
     container.innerHTML = `
         <div class="mb-4">
@@ -31,6 +38,7 @@ export async function renderTeamDetails(container, teamId) {
             <h2>
                 <i class="bi bi-person-badge text-primary me-2"></i> ${team.name}
                 ${scoreBadge}
+                ${rankBadge}
             </h2>
             ${Auth.isJudge() ? `
             <a href="#/team/${team.id}/evaluate" class="btn btn-warning fw-bold">
@@ -45,9 +53,13 @@ export async function renderTeamDetails(container, teamId) {
                 <div class="card h-100">
                     <div class="card-header">Team Information</div>
                     <div class="card-body">
-                        <p><strong>Code:</strong> ${team.team_code || 'N/A'}</p>
-                        <p><strong>Registered:</strong> ${new Date(team.created_at).toLocaleDateString()}</p>
-                        <p><strong>Total Members:</strong> ${members.length}</p>
+                        <p class="mb-2"><strong>Code:</strong> ${team.team_code || 'N/A'}</p>
+                        <p class="mb-2"><strong>Registered:</strong> ${new Date(team.created_at).toLocaleDateString()}</p>
+                        <p class="mb-2"><strong>Total Members:</strong> ${members.length}</p>
+                        <hr class="my-3">
+                        <p class="mb-2"><strong>Status:</strong> ${evaluation ? '<span class="badge bg-success">Evaluated</span>' : '<span class="badge bg-secondary">Pending Evaluation</span>'}</p>
+                        <p class="mb-2"><strong>Score:</strong> ${evaluation ? `<span class="badge bg-success"><i class="bi bi-star-fill me-1"></i>Score: ${evaluation.total_score}</span>` : '<span class="text-muted">N/A</span>'}</p>
+                        <p class="mb-0"><strong>Current Rank:</strong> ${evaluation && rank ? `<span class="badge bg-primary"><i class="bi bi-trophy-fill me-1"></i>Rank: #${rank}</span>` : '<span class="text-muted">N/A</span>'}</p>
                     </div>
                 </div>
             </div>
